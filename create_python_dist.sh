@@ -110,8 +110,8 @@ easy_install ipython
 sed -i -e "s:511:5511:g" $CURDIR/$DIRNAME/lib/python2.7/site-packages/ipython-0.10.1-py2.7.egg/IPython/kernel/controllerservice.py 
 
 
-tar -xzf numpy-1.5.1rc1.tar.gz
-cd numpy-1.5.1rc1
+tar -xzf numpy-1.5.1.tar.gz
+cd numpy-1.5.1
 python setup.py install --prefix=$CURDIR/$DIRNAME
 cd ..
 
@@ -146,4 +146,13 @@ cd $CURDIR
 cp $CURDIR/src/set_python_env.sh .
 chmod 744 set_python_env.sh
 
+cp $SCRIPTDIR/upload_env.sh .
+chmod 744 upload_env.sh
+
+cp $SCRIPTDIR/load_env.jdl .
+cp $SCRIPTDIR/load_env.sh .
+cp $SCRIPTDIR/load_env_worker.sh .
+cp $CURDIR/$DIRNAME/bin/gcp .
+cp $CURDIR/$DIRNAME/bin/greplicate .
+cp $CURDIR/$DIRNAME/bin/cluster_storage.py .
 
