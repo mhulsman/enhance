@@ -1,0 +1,24 @@
+[
+ JobType="Parametric";
+ VirtualOrganisation="lsgrid";
+ Executable="XXENVNAMEXX.sh";
+ StdOutput="stdout.txt";
+ StdError="stderror.txt";
+ ParameterStart=0;
+ ParameterStep=1;
+ Parameters=XXNJOBXX;
+ Arguments = "XXENVPATHXX _PARAM_"
+ InputSandbox={"load_env_worker.sh","cluster_storage.py", "gcp"};
+ OutputSandbox={"stdout.txt","stderror.txt"};
+ Requirements=(
+   ( !RegExp("kun", other.GlueCEUniqueID) ) &&
+   ( !RegExp("rug", other.GlueCEUniqueID) ) &&
+   ( !RegExp("nki", other.GlueCEUniqueID) ) &&
+   ( !RegExp("uu", other.GlueCEUniqueID) ) &&
+   ( !RegExp("lumc", other.GlueCEUniqueID) ) &&
+   ( !RegExp("amc", other.GlueCEUniqueID) ) &&
+   ( !RegExp("wur", other.GlueCEUniqueID) ) &&
+   ( other.GlueCEPolicyMaxWallClockTime > 300) 
+);
+ ShallowRetryCount=3;
+]
