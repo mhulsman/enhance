@@ -75,13 +75,20 @@ def is_gzipfile(filename):
     except Exception:
         return False
 
-def unpack(filename, force=False):
+def unpack(filename, workdir=""):
     res = []
-    if filename.endswith('.tar.gz'):
-        workdir = filename[:-7]
-        if os.path.isdir(workdir):
-            shutil.rmtree(workdir)
-        runCommand("tar -xzf " + filename)
+    if not workdir:
+        if filename.endswith('.tar.gz'):
+            workdir = filename[:-7]
+        elif filename.endswith('.tgz'):
+            workdir = filename[:-4]
+        else:
+            raise RuntimeError, "Cannot determine work directory"
+
+    if os.path.isdir(workdir):
+        shutil.rmtree(workdir)
+    print workdir
+    runCommand("tar -xzf " + filename)
     return workdir
 
 def runCommand(cmd):

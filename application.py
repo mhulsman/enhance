@@ -73,6 +73,9 @@ class Application(object):
         self.versions[v.version] = v
         self.constrained_versions.add(v)
 
+    def getUsers(self):
+        return [app for app in self.package_manager.apps.values() if app.dependsOn(self)]
+
     def __repr__(self):
         res = ""
         if self.state == "installed":

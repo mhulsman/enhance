@@ -50,7 +50,7 @@ class Package(object):
 
         workdir = self.Unpack(package_file)
 
-        os.chdir(workdir)
+        enter_dir(workdir)
 
         self.Config(prefixpath)
 
@@ -66,32 +66,39 @@ class Package(object):
         self.setState("available")
 
     def Fetch(self):
-        info(self.instance_name, "fetch")
         if not isinstance(self.fetch,str):
             self.package_file = self.fetch()
         
+        if not self.fetch:
+            return
+
+        info(self.instance_name, "fetch")
         self.package_file = download(self.fillVars(self.fetch))
         return self.package_file
 
     def Unpack(self, package_file):
-        info(self.instance_name, "unpack")
-        if not hasattr(self, "unpack"):
-            self.workdir = unpack(package_file)
-        else:
-            self.workdir = self.unpack(package_file)
+        workdir = self.__dict__.get("workdir","")
+        if package_file:
+            info(self.instance_name, "unpack")
+            if not hasattr(self, "unpack"):
+                workdir = unpack(package_file, workdir)
+            else:
+                workdir = self.unpack(package_file, workdir)
+            if not hasattr(self, "workdir"):
+                self.workdir = workdir
         return self.workdir
         
     def Config(self, prefixpath):        
-        info(self.instance_name, "config")
         if hasattr(self, 'config'):
+            info(self.instance_name, "config")
             if isinstance(self.config, str):
                 runCommand(self.fillVars(self.config, prefix=prefixpath))
             else:
                 self.config(prefixpath)
 
     def Build(self, prefixpath):
-        info(self.instance_name, "build")
         if hasattr(self, 'build'):
+            info(self.instance_name, "build")
             if isinstance(self.build, str):
                 runCommand(self.fillVars(self.build, prefix=prefixpath))
                 runCommand(self.build)
@@ -99,8 +106,8 @@ class Package(object):
                 self.build(prefixpath)
 
     def Install(self, prefixpath):
-        info(self.instance_name, "config")
         if hasattr(self, 'install'):
+            info(self.instance_name, "install")
             if isinstance(self.install, str):
                 runCommand(self.fillVars(self.install, prefix=prefixpath))
             else:
@@ -114,6 +121,12 @@ class Package(object):
             self.parsed_dependencies = tuple([parse_dep(dependency) for dependency in self.dependencies])
         return self.parsed_dependencies
 
+
+    def dependsOn(self, app):
+        for dep in self.getDependencies():
+            if dep[0] == app.name:
+                return True
+        return False
 
     def fulfilledDeps(self, versions):
         deps = self.getDependencies()
@@ -161,3 +174,20 @@ class Package(object):
             return "\033[33m" + self.instance_name + "\033[0m"
         else:
             return "\033[32m" + self.instance_name + "\033[0m"
+
+
+class MakePackage(Package):
+    config="./configure --prefix=%(prefix)s"
+
+    build="make"
+
+    install="make install"
+
+class PythonPackage(Package):
+    dependencies=["python"]
+
+    install="python setup.py install --prefix=%(prefix)s"
+
+class EasyInstallPackage(Package):
+    workdir="%(prefix)s"
+    install="easy_install %(name)s"

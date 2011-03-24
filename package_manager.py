@@ -4,6 +4,7 @@ from config import *
 from tools import *
 import os
 import time
+#from IPython.Debugger import Tracer; debug_here = Tracer()
 
 class PackageManager(object):
     def __init__(self, distpath):
@@ -94,15 +95,16 @@ class PackageManager(object):
         while to_install:
             change = False
             for ti in list(to_install):
-                if not ti.fulfilledDeps(ordered_to_install):
+                if not ti.fulfilledDeps(ordered_to_install + installed.values()):
                     continue
                 change = True
                 ordered_to_install.append(ti)
                 to_install.discard(ti)
-                for dep in ti.getDependencies():
-                    if dep[0] in installed:
-                        to_install.add(installed[dep[0]])
-                        installed.pop(dep[0])
+                if ti.application.state == "installed":
+                    for u in ti.application.getUsers():
+                        if not u in ordered_to_install and not u in to_install:
+                            to_install.add(u)
+                            installed.pop(u.name)
 
             assert change, "Cannot determine dependency order, cycles?"
 
@@ -134,12 +136,11 @@ class DependencyInferrer(object):
 
         self.done_stack = []
         self.stack_apps = set(self.remain_stack)
-
         while self.remain_stack:
             s = self.stepStack()
             while s.next() is False:
                 s = self.backtrack()
-            newapps = set([self.apps[appname] for appname in s.deps.keys()]) - self.stack_apps
+            newapps = set([self.all_apps[appname] for appname in s.deps.keys()]) - self.stack_apps
             self.remain_stack = list(newapps) + self.remain_stack
 
         installs = [s.version for s in self.done_stack]
@@ -151,8 +152,8 @@ class DependencyInferrer(object):
         
         deps = []
         for elem in self.done_stack:
-            if app.name in elem.dep:
-                deps.extend(elem.dep[app.name])
+            if app.name in elem.deps:
+                deps.extend(elem.deps[app.name])
         
         s = DependencyStackElem(app, deps, app in self.merge_apps, self.remain_stack)
         
