@@ -85,9 +85,6 @@ def unpack(filename, workdir=""):
         else:
             raise RuntimeError, "Cannot determine work directory"
 
-    if os.path.isdir(workdir):
-        shutil.rmtree(workdir)
-    print workdir
     runCommand("tar -xzf " + filename)
     return workdir
 

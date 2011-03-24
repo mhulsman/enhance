@@ -1,4 +1,5 @@
 #/bin/bash
+set -e
 
 ENVPATH=$1
 PARAMNR=$2
@@ -17,9 +18,10 @@ chmod 744 ./gcp
 ./gcp $ENVPATH .
 tar -xzf $ENVNAME
 CURDIR=`pwd`
+
 cd sys_enhance
-cat _set_python_env.sh | sed s#ONAME#$CURDIR#g > set_python_env.sh
-source set_python_env.sh
+cat _paths | sed s#ONAME#$CURDIR#g > paths
+source paths
 echo "Environment loaded for $PARAMNR, starting work."
 
 #run job

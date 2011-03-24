@@ -1,14 +1,14 @@
 [
  JobType="Parametric";
  VirtualOrganisation="lsgrid";
- Executable="XXENVNAMEXX.sh";
+ Executable="load_env_worker.sh";
  StdOutput="stdout.txt";
  StdError="stderror.txt";
  ParameterStart=0;
  ParameterStep=1;
  Parameters=XXNJOBXX;
  Arguments = "XXENVPATHXX _PARAM_"
- InputSandbox={"load_env_worker.sh","cluster_storage.py", "gcp"};
+ InputSandbox={"load_env_worker.sh","sys_enhance/bin/cluster_storage.py", "sys_enhance/bin/gcp"};
  OutputSandbox={"stdout.txt","stderror.txt"};
  Requirements=(
    ( !RegExp("kun", other.GlueCEUniqueID) ) &&

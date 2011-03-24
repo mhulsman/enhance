@@ -1,4 +1,5 @@
 from tools import *
+import shutil
 
 class Package(object):
     def __init__(self, application, filename):
@@ -9,7 +10,8 @@ class Package(object):
     
         self.prefixpath = self.application.package_manager.prefixpath
         self.srcpath = self.application.package_manager.srcpath
-       
+        self.mainpath = self.application.package_manager.mainpath
+        self.distpath = self.application.package_manager.distpath
 
     def processConfig(self, config):
         self.state = config.get('state', "available")
@@ -43,7 +45,9 @@ class Package(object):
                 'name':self.package_name, 
                 'version':self.version,
                 'prefix':self.prefixpath,
-                'srcpath':self.srcpath}
+                'srcpath':self.srcpath,
+                'rootpath':self.mainpath,
+                'distpath':self.distpath}
         vars.update(kwargs)
         return cmd % vars
 
@@ -54,11 +58,18 @@ class Package(object):
 
         oldpath = enter_dir(self.srcpath)
 
+        if hasattr(self,'workdir'):
+            if os.path.isdir(self.workdir):
+                shutil.rmtree(self.workdir)
+                
+
         package_file = self.Fetch()
 
         workdir = self.Unpack(package_file)
 
-        enter_dir(workdir)
+        if workdir:
+            workdir = self.fillVars(workdir)
+            enter_dir(workdir)
 
         self.Config()
 
@@ -75,12 +86,11 @@ class Package(object):
 
     def Fetch(self):
         if hasattr(self,"fetch"):
+            info(self.instance_name, "fetch")
             if not isinstance(self.fetch,str):
                 self.package_file = self.fetch()
-            
-
-            info(self.instance_name, "fetch")
-            self.package_file = download(self.fillVars(self.fetch))
+            else: 
+                self.package_file = download(self.fillVars(self.fetch))
             return self.package_file
         return ""            
 
@@ -94,7 +104,7 @@ class Package(object):
                 workdir = self.unpack(package_file, workdir)
             if not hasattr(self, "workdir"):
                 self.workdir = workdir
-        return self.workdir
+        return workdir
         
     def Config(self):        
         if hasattr(self, 'config'):
