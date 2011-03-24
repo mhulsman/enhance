@@ -66,15 +66,15 @@ class Package(object):
         self.setState("available")
 
     def Fetch(self):
-        if not isinstance(self.fetch,str):
-            self.package_file = self.fetch()
-        
-        if not self.fetch:
-            return
+        if hasattr(self,"fetch"):
+            if not isinstance(self.fetch,str):
+                self.package_file = self.fetch()
+            
 
-        info(self.instance_name, "fetch")
-        self.package_file = download(self.fillVars(self.fetch))
-        return self.package_file
+            info(self.instance_name, "fetch")
+            self.package_file = download(self.fillVars(self.fetch))
+            return self.package_file
+        return ""            
 
     def Unpack(self, package_file):
         workdir = self.__dict__.get("workdir","")
@@ -189,5 +189,6 @@ class PythonPackage(Package):
     install="python setup.py install --prefix=%(prefix)s"
 
 class EasyInstallPackage(Package):
+    dependencies = ["setuptools"]
     workdir="%(prefix)s"
     install="easy_install %(name)s"
