@@ -102,9 +102,10 @@ class PackageManager(object):
                 to_install.discard(ti)
                 if ti.application.state == "installed":
                     for u in ti.application.getUsers():
+                        u = u.cur_version
                         if not u in ordered_to_install and not u in to_install:
                             to_install.add(u)
-                            installed.pop(u.name)
+                            installed.pop(u.package_name)
 
             assert change, "Cannot determine dependency order, cycles?"
 
@@ -121,7 +122,7 @@ class PackageManager(object):
         time.sleep(5)
         for pos, o in enumerate(ordered_to_install):
             print "\033[1m\033[34mMerging " + o.instance_name + (" [%d/%d]" % (pos + 1,len(ordered_to_install))) + "\033[0m"
-            o.Merge(self.srcpath, self.prefixpath)
+            o.Merge()
         print "\033[1m\033[34mMerging complete \033[0m"
             
 

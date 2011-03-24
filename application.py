@@ -73,6 +73,18 @@ class Application(object):
         self.versions[v.version] = v
         self.constrained_versions.add(v)
 
+    def fulfilledDeps(self, versions):
+        if self.cur_version is None:
+            return True
+        else:
+            return self.cur_version.fulfilledDeps(versions)
+    
+    def dependsOn(self, app):
+        if self.cur_version is None:
+            return False
+        else:
+            return self.cur_version.dependsOn(app)
+
     def getUsers(self):
         return [app for app in self.package_manager.apps.values() if app.dependsOn(self)]
 

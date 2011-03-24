@@ -6,6 +6,10 @@ class Package(object):
         self.parseFilename(filename)
         assert self.package_name == self.application.name, "Mismatch in application name and package name"
         self.state = "available"
+    
+        self.prefixpath = self.application.package_manager.prefixpath
+        self.srcpath = self.application.package_manager.srcpath
+       
 
     def processConfig(self, config):
         self.state = config.get('state', "available")
@@ -35,16 +39,20 @@ class Package(object):
             self.parsed_version = parse_version(self.version)
 
     def fillVars(self, cmd, **kwargs):
-        vars = {'full_name':self.instance_name, 'name':self.package_name, 'version':self.version}
+        vars = {'full_name':self.instance_name, 
+                'name':self.package_name, 
+                'version':self.version,
+                'prefix':self.prefixpath,
+                'srcpath':self.srcpath}
         vars.update(kwargs)
         return cmd % vars
 
-    def Merge(self, srcpath, prefixpath):
+    def Merge(self):
         self.application.switchVersion(self)
         
         info(self.instance_name, "Starting merge")
 
-        oldpath = enter_dir(srcpath)
+        oldpath = enter_dir(self.srcpath)
 
         package_file = self.Fetch()
 
@@ -52,11 +60,11 @@ class Package(object):
 
         enter_dir(workdir)
 
-        self.Config(prefixpath)
+        self.Config()
 
-        self.Build(prefixpath)
+        self.Build()
 
-        self.Install(prefixpath)
+        self.Install()
 
         os.chdir(oldpath)
         info(self.instance_name, "Merge finished")
@@ -77,7 +85,7 @@ class Package(object):
         return ""            
 
     def Unpack(self, package_file):
-        workdir = self.__dict__.get("workdir","")
+        workdir = getattr(self,"workdir","")
         if package_file:
             info(self.instance_name, "unpack")
             if not hasattr(self, "unpack"):
@@ -88,28 +96,27 @@ class Package(object):
                 self.workdir = workdir
         return self.workdir
         
-    def Config(self, prefixpath):        
+    def Config(self):        
         if hasattr(self, 'config'):
             info(self.instance_name, "config")
             if isinstance(self.config, str):
-                runCommand(self.fillVars(self.config, prefix=prefixpath))
+                runCommand(self.fillVars(self.config))
             else:
                 self.config(prefixpath)
 
-    def Build(self, prefixpath):
+    def Build(self):
         if hasattr(self, 'build'):
             info(self.instance_name, "build")
             if isinstance(self.build, str):
-                runCommand(self.fillVars(self.build, prefix=prefixpath))
-                runCommand(self.build)
+                runCommand(self.fillVars(self.build))
             else:
                 self.build(prefixpath)
 
-    def Install(self, prefixpath):
+    def Install(self):
         if hasattr(self, 'install'):
             info(self.instance_name, "install")
             if isinstance(self.install, str):
-                runCommand(self.fillVars(self.install, prefix=prefixpath))
+                runCommand(self.fillVars(self.install))
             else:
                 self.install(prefixpath)
         self.setState("installed")
