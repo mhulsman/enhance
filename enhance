@@ -39,10 +39,19 @@ def init(profile):
         sys.exit(1)
 
     shutil.copyfile(profile_path, "profile.ini") 
-    if not os.path.isdir('sys_enhance'):
-        os.mkdir('sys_enhance')
+    mkpath('sys_enhance/bin')
+    
     if not os.path.exists('enhance'):
         os.symlink(os.path.join(srcpath,'enhance'), 'enhance')
+    if not os.path.exists('sys_enhance/bin/enhance'):
+        os.symlink(os.path.join(srcpath,'enhance'), 'sys_enhance/bin/enhance')
+  
+    envpath = os.path.join(srcpath,"paths")
+    runCommand("cat " + envpath + " | sed s#ONAME#" + os.getcwd() + "#g > paths")
+    
+    envpath = os.path.join(srcpath,"start_enhance")
+    runCommand("cat " + envpath + " | sed s#ONAME#" + os.getcwd() + "#g > start_enhance")
+    runCommand("chmod 755 start_enhance")
 
     print "\033[32mEnhance, profile \033[34m\033[1m" + str(profile) + "\033[0m\033[32m initialized in \033[0m\033[33m" + os.getcwd()  + "\033[0m"
     list()

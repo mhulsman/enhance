@@ -15,6 +15,7 @@ class PackageManager(object):
         self.apps = self.get_applications()
         self.loadConfig()
         self.writeConfig()
+        source_env(os.path.join(os.getcwd(), "paths"))
 
     def getAppsByState(self, state):
         return [app for app in self.apps.values() if app.state == state]

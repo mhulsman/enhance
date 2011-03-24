@@ -19,11 +19,22 @@ def enter_dir(path):
     return oldpath
 
 
+
 def check_dir(path):
     if not os.path.isdir(path):
         assert not os.path.exists(path), "Folder: " + str(path) + " already exists as non-directory"
         mkpath(path)
 
+
+def source_env(path):
+    f = open(path)
+    for line in f:
+        line = line.strip()
+        if not line.startswith('export'):
+            continue
+        name, value = line[6:].strip().split('=')
+        value = value.replace("$" + name, os.environ.get(name,""))
+        os.environ[name] = value
 
 def url_to_file(url):
     return url.split('/')[-1]
@@ -127,6 +138,6 @@ def get_src_path(obj):
     srcfile = inspect.getfile(obj)
     if os.path.islink(srcfile):
         srcfile = os.readlink(srcfile)
-    srcpath = os.path.dirname(srcfile)
+    srcpath = os.path.abspath(os.path.dirname(srcfile))
     return srcpath
 
