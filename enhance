@@ -66,12 +66,13 @@ def list():
 def install(packages):
     p = PackageManager(get_src_path(init))
     installs = set()
+    if len(packages) == 1 and packages[0] == "all":
+        packages = p.apps.keys()
     for package in packages:
         d = parse_dep(package)
         if len(d) > 1:
             p.addConstraint(d)
         installs.add(d[0])
-
     installs.update([a.name for a in p.getAppsByState("queued")])
     p.merge(installs)
 
