@@ -1,7 +1,7 @@
 from package import *
 
 class nlgrid_jdl(Package):
-    dependencies = ["cluster_storage"]
+    dependencies = ["cluster_tools"]
    
     workdir="%(rootpath)s/nlgrid"
 

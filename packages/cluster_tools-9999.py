@@ -1,6 +1,6 @@
 from package import *
 
-class cluster_storage(PythonPackage):
+class cluster_tools(PythonPackage):
     dependencies = ["git"]
 
     def fetch(self):

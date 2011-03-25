@@ -112,7 +112,7 @@ class Package(object):
             if isinstance(self.config, str):
                 runCommand(self.fillVars(self.config))
             else:
-                self.config(prefixpath)
+                self.config()
 
     def Build(self):
         if hasattr(self, 'build'):
@@ -120,7 +120,7 @@ class Package(object):
             if isinstance(self.build, str):
                 runCommand(self.fillVars(self.build))
             else:
-                self.build(prefixpath)
+                self.build()
 
     def Install(self):
         if hasattr(self, 'install'):
@@ -128,7 +128,7 @@ class Package(object):
             if isinstance(self.install, str):
                 runCommand(self.fillVars(self.install))
             else:
-                self.install(prefixpath)
+                self.install()
         self.setState("installed")
     
     def getDependencies(self):
