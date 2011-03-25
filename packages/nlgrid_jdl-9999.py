@@ -3,16 +3,18 @@ from package import *
 class nlgrid_jdl(Package):
     dependencies = ["cluster_storage"]
    
-    workdir="%(rootpath)s/nlgrid_jdl"
+    workdir="%(rootpath)s/nlgrid"
 
     install = """
-              cp %(distpath)s/packages/nlgrid_jdl/load_env_worker.sh %(rootpath)s/nlgrid_jdl
-              cp %(distpath)s/packages/nlgrid_jdl/load_env.sh %(rootpath)s/nlgrid_jdl
-              cp %(distpath)s/packages/nlgrid_jdl/load_env.jdl %(rootpath)s
-              cp %(distpath)s/packages/nlgrid_jdl/upload_env.sh %(rootpath)s
+              cat %(distpath)s/packages/nlgrid_jdl/enhance_worker | sed s#XXLFCHOMEXX#$LFC_HOME#g > %(rootpath)s/nlgrid/enhance_worker
+              cat %(distpath)s/packages/nlgrid_jdl/enhance.jdl | sed s#XXPREFIXXX#%(prefix)s#g > %(rootpath)s/nlgrid/enhance.jdl
+              cat %(distpath)s/packages/nlgrid_jdl/upload | sed s#XXPREFIXXX#%(prefix)s#g > %(rootpath)s/upload
+              cp %(distpath)s/packages/nlgrid_jdl/README %(rootpath)s/nlgrid/
               cp %(distpath)s/paths %(prefix)s/_paths
-              chmod 755 %(rootpath)s/upload_env.sh
-              chmod 755 %(rootpath)s/nlgrid_jdl/load_env.sh
-              chmod 755 %(rootpath)s/nlgrid_jdl/load_env_worker.sh
+              chmod 755 %(rootpath)s/upload
+              chmod 755 %(rootpath)s/nlgrid/enhance_worker
+              if [ ! -d "../sys_enhance/work" ]; then
+                 mkdir ../sys_enhance/work
+              fi
               """ 
    

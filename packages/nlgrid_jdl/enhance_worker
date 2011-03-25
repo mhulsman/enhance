@@ -5,6 +5,7 @@ ENVPATH=$1
 PARAMNR=$2
 ENVNAME=`basename $ENVPATH`
 
+export LFC_HOME=XXLFCHOMEXX
 export LFC_HOST=lfc.grid.sara.nl
 
 #Wait a random time to not overload the server after submission of a number of jobs.

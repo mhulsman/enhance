@@ -1,0 +1,8 @@
+To use Enhance on the cluster,
+
+0) adapt the environment, put any files you need (e.g. code) in the work directory
+1) upload the environment to grid storage with the upload script in the root directory
+2) copy the contents of this directory to a location of your choosing
+   - adapt the jdl to include the number of jobs and the environment location on the grid
+   - adapt the enhance_worker script to perform the actions you need
+3) submit the job
