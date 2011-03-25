@@ -12,6 +12,7 @@ ENVNAME=`basename $GRIDPATH`
 echo "Packing environment..."
 cd XXPREFIXXX
 cd ..
+source paths
 tar -czvf $ENVNAME ./sys_enhance
 
 

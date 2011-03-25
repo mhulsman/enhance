@@ -11,6 +11,8 @@ from distutils.dir_util import mkpath
 import sys
 import shutil
 import inspect
+from urlparse import urlsplit
+
 
 def enter_dir(path):
     check_dir(path)
@@ -36,36 +38,43 @@ def source_env(path):
         value = value.replace("$" + name, os.environ.get(name,""))
         os.environ[name] = value
 
-def url_to_file(url):
-    return url.split('/')[-1]
-    
 def download(url, filename=None):
-    if filename is None:
-        filename = url_to_file(url)
-    
-    u = urllib2.urlopen(url)
-    f = open(filename, 'w')
-    meta = u.info()
-    file_size = int(meta.getheaders("Content-Length")[0])
-    print "Downloading: %s Bytes: %s" % (filename, file_size)
+    #based on stackoverflow answer
+    def getFileName(url,openUrl):
+        if 'Content-Disposition' in openUrl.info():
+            # If the response has Content-Disposition, try to get filename from it
+            cd = dict(map(
+                    lambda x: x.strip().split('='),
+                    openUrl.info().split(';')))
+            if 'filename' in cd:
+                filename = cd['filename'].strip("\"'")
+                if filename: return filename
+            # if no filename was found above, parse it out of the final URL.
+        return os.path.basename(urlsplit(openUrl.url)[2])
 
-    file_size_dl = 0
-    block_sz = 8192
-    while True:
-        buffer = u.read(block_sz)
-        if not buffer:
-            break
+    u = urllib2.urlopen(urllib2.Request(url))
+    try:
+        filename = filename or getFileName(url,u)
+        meta = u.info()
+        file_size = int(meta.getheaders("Content-Length")[0])
+        print "Downloading: %s Bytes: %s" % (filename, file_size)
+        f = open(filename, 'w')
+        file_size_dl = 0
+        block_sz = 8192
+        while True:
+            buffer = u.read(block_sz)
+            if not buffer:
+                break
 
-        file_size_dl += block_sz
-        f.write(buffer)
-        status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
-        status = status + chr(8)*(len(status)+1)
-        print status,
-
-    f.close()
-
+            file_size_dl += block_sz
+            f.write(buffer)
+            status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
+            status = status + chr(8)*(len(status)+1)
+            print status,
+        f.close()
+    finally:
+        u.close()
     return filename
-
 
 def is_gzipfile(filename):
     try:
@@ -95,7 +104,10 @@ def runCommand(cmd):
 
 def getCommandOutput(cmd):
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-    return p.stdout.read().strip()
+    res = p.communicate()[0]
+    if p.returncode != 0:
+        raise RuntimeError, "Command failed"
+    return res
 
 def error(msg):
     print "\033[41mERROR: " + msg + "\033[0m"
