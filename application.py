@@ -86,7 +86,7 @@ class Application(object):
             return self.cur_version.dependsOn(app)
 
     def getUsers(self):
-        return [app for app in self.package_manager.apps.values() if app.dependsOn(self)]
+        return [app for app in self.package_manager.apps.values() if app.dependsOn(self) and app.state == "installed"]
 
     def __repr__(self):
         res = ""

@@ -40,11 +40,17 @@ def init(profile):
 
     shutil.copyfile(profile_path, "profile.ini") 
     mkpath('sys_enhance/bin')
+    mkpath('sys_enhance/lib64')
     
     if not os.path.exists('enhance'):
         os.symlink(os.path.join(srcpath,'enhance'), 'enhance')
     if not os.path.exists('sys_enhance/bin/enhance'):
         os.symlink(os.path.join(srcpath,'enhance'), 'sys_enhance/bin/enhance')
+    if not os.path.exists('sys_enhance/lib'):
+        oldpath = os.getcwd()
+        os.chdir(os.path.join(os.getcwd(), 'sys_enhance'))
+        os.symlink('lib64','lib')
+        os.chdir(oldpath)
   
     envpath = os.path.join(srcpath,"paths")
     runCommand("cat " + envpath + " | sed s#ONAME#" + os.getcwd() + "#g > paths")
