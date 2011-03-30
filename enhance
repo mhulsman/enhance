@@ -27,8 +27,11 @@ def help_and_exit():
 def init(profile):
     srcpath = get_src_path(init)
 
+    if srcpath == os.getcwd():
+        error("Cannnot initialize in source directory! Please create a separate directory for the environment")
+
     if os.path.isfile('profile.ini'):
-        error("Error: directory already initalized!")
+        error("Directory already initalized!")
 
     profile_path = os.path.join(srcpath, 'profiles',profile)
     if not os.path.isfile(profile_path):
