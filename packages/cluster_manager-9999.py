@@ -10,6 +10,7 @@ class cluster_manager(Package):
 
     def install(self):
         mkpath(os.path.join(self.prefixpath, 'usr/local/cluster_manager'))
+        
         cl_path = getCommandOutput('python -c "import inspect; import cluster_storage; print inspect.getfile(cluster_storage)"')
         cl_path = os.path.join(os.path.dirname(cl_path),"cluster_storage.py")
 

@@ -8,7 +8,7 @@
  ParameterStep=1;
  Parameters=FILL_IN_NUMBER_OF_JOBS;
  Arguments = "FILL_IN_UPLOAD_FILENAME _PARAM_";
- InputSandbox={"enhance_worker","XXPREFIXXX/bin/cluster_storage.py", "XXPREFIXXX/bin/gcp"};
+ InputSandbox={"enhance_worker","XXCLUSTERSTORAGEXX", "XXPREFIXXX/bin/gcp"};
  OutputSandbox={"stdout.txt","stderror.txt"};
  Requirements=(
    ( !RegExp("kun", other.GlueCEUniqueID) ) &&
