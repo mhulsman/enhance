@@ -45,7 +45,7 @@ def download(url, filename=None):
             # If the response has Content-Disposition, try to get filename from it
             cd = dict(map(
                     lambda x: x.strip().split('='),
-                    openUrl.info().split(';')))
+                    str(openUrl.info()).split(';')))
             if 'filename' in cd:
                 filename = cd['filename'].strip("\"'")
                 if filename: return filename
