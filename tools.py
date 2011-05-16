@@ -12,6 +12,7 @@ import sys
 import shutil
 import inspect
 from urlparse import urlsplit
+import re
 
 
 def enter_dir(path):
@@ -43,12 +44,9 @@ def download(url, filename=None):
     def getFileName(url,openUrl):
         if 'Content-Disposition' in openUrl.info():
             # If the response has Content-Disposition, try to get filename from it
-            cd = dict(map(
-                    lambda x: x.strip().split('='),
-                    str(openUrl.info()).split(';')))
-            if 'filename' in cd:
-                filename = cd['filename'].strip("\"'")
-                if filename: return filename
+            match = re.search('filename="(?P<filename>.*)"', str(openUrl.info()))
+            if match is not None:
+                return match.group('filename')
             # if no filename was found above, parse it out of the final URL.
         return os.path.basename(urlsplit(openUrl.url)[2])
 
