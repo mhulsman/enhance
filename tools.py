@@ -61,7 +61,7 @@ def download(url, filename=None):
 
         if file_size < 0:
             file_size == "unknown"
-        print "Downloading: %s Bytes: %s" % (filename, file_size)
+        print "Downloading: %s Bytes: %s" % (filename, str(file_size))
         f = open(filename, 'w')
         file_size_dl = 0
         block_sz = 8192
