@@ -58,7 +58,10 @@ def download(url, filename=None):
             file_size = int(meta.getheaders("Content-Length")[0])
         else:
             file_size = -1
-        print "Downloading: %s Bytes: %s" % (filename, file_size if file_size >= 0 else 'unknown')
+
+        if file_size < 0:
+            file_size == "unknown"
+        print "Downloading: %s Bytes: %s" % (filename, file_size)
         f = open(filename, 'w')
         file_size_dl = 0
         block_sz = 8192
