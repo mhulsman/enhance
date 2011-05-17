@@ -12,6 +12,7 @@ import sys
 import shutil
 import inspect
 from urlparse import urlsplit
+import re
 
 
 def enter_dir(path):
@@ -43,12 +44,9 @@ def download(url, filename=None):
     def getFileName(url,openUrl):
         if 'Content-Disposition' in openUrl.info():
             # If the response has Content-Disposition, try to get filename from it
-            cd = dict(map(
-                    lambda x: x.strip().split('='),
-                    openUrl.info().split(';')))
-            if 'filename' in cd:
-                filename = cd['filename'].strip("\"'")
-                if filename: return filename
+            match = re.search('filename="(?P<filename>.*)"', str(openUrl.info()))
+            if match is not None:
+                return match.group('filename')
             # if no filename was found above, parse it out of the final URL.
         return os.path.basename(urlsplit(openUrl.url)[2])
 
@@ -56,8 +54,11 @@ def download(url, filename=None):
     try:
         filename = filename or getFileName(url,u)
         meta = u.info()
-        file_size = int(meta.getheaders("Content-Length")[0])
-        print "Downloading: %s Bytes: %s" % (filename, file_size)
+        if len(meta.getheaders("Content-Length")) > 0:
+            file_size = int(meta.getheaders("Content-Length")[0])
+        else:
+            file_size = -1
+        print "Downloading: %s Bytes: %s" % (filename, file_size if file_size >= 0 else 'unknown')
         f = open(filename, 'w')
         file_size_dl = 0
         block_sz = 8192
@@ -68,7 +69,10 @@ def download(url, filename=None):
 
             file_size_dl += block_sz
             f.write(buffer)
-            status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
+            if file_size >= 0:
+                status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
+            else:
+                status = r"%10d  [file size unknown]" % (file_size_dl)
             status = status + chr(8)*(len(status)+1)
             print status,
         f.close()
