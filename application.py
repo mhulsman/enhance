@@ -1,4 +1,5 @@
 import copy
+from tools import *
 
 class Application(object):
     def __init__(self, name, package_manager):
@@ -45,7 +46,6 @@ class Application(object):
         if not update and self.cur_version in self.constrained_versions:
             del cv[cv.index(self.cur_version)]
             cv.insert(0,self.cur_version)
-        
         s = copy.copy(self)
         return cv[idx]
 

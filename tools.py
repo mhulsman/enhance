@@ -50,7 +50,12 @@ def download(url, filename=None):
             # if no filename was found above, parse it out of the final URL.
         return os.path.basename(urlsplit(openUrl.url)[2])
 
-    u = urllib2.urlopen(urllib2.Request(url))
+    try:
+        u = urllib2.urlopen(urllib2.Request(url))
+    except urllib2.HTTPError, e:
+        error("Could not download %s, error: %s" %(str(url), str(e)))
+        
+        
     try:
         filename = filename or getFileName(url,u)
         meta = u.info()
@@ -109,10 +114,14 @@ def unpack(filename, workdir=""):
         runCommand("tar -xzf " + filename)
     return workdir
 
-def runCommand(cmd):
+def runCommand(cmd,exception=False):
+    #print "Executing: \n" + cmd
     res = subprocess.call(cmd,shell=True)
     if not res == 0:
-        raise RuntimeError, "Command failed"
+        if exception:
+            raise RuntimeError, "Command failed"
+        else:
+            error('The following command failed: ' + cmd)
 
 def getCommandOutput(cmd):
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
@@ -169,3 +178,17 @@ def get_src_path(obj):
     srcpath = os.path.abspath(os.path.dirname(srcfile))
     return srcpath
 
+def modifyEnviron(moddict):
+    olddict = {}
+    for k,v in moddict.iteritems():
+        if k in os.environ:
+            olddict[k]=  os.environ[k]
+        else:
+            olddict[k] = ""
+        
+        if v:
+            os.environ[k]= v
+        else:
+            del os.environ[k]
+            
+    return olddict

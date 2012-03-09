@@ -1,3 +1,4 @@
+import os
 from tools import *
 import shutil
 
@@ -47,7 +48,9 @@ class Package(object):
                 'prefix':self.prefixpath,
                 'srcpath':self.srcpath,
                 'rootpath':self.mainpath,
-                'distpath':self.distpath}
+                'distpath':self.distpath,
+                'cwd':os.getcwd()
+                }
         vars.update(kwargs)
         return cmd % vars
 
@@ -71,11 +74,24 @@ class Package(object):
             workdir = self.fillVars(workdir)
             enter_dir(workdir)
 
+        
+        if hasattr(self,'modify_environ'):
+            oldstate = modifyEnviron(dict([(k,self.fillVars(v)) for k,v in self.modify_environ.iteritems()]))
+
+        if hasattr(self,'build_reldir'):
+            build_dir = os.getcwd() + '/' + self.build_reldir
+            if os.path.isdir(build_dir):
+                shutil.rmtree(build_dir)
+            enter_dir(build_dir)
+                
         self.Config()
 
         self.Build()
 
         self.Install()
+
+        if hasattr(self,'modify_environ'):
+            modifyEnviron(oldstate)
 
         os.chdir(oldpath)
         info(self.instance_name, "Merge finished")
@@ -196,7 +212,7 @@ class Package(object):
 class MakePackage(Package):
     config="./configure --prefix=%(prefix)s"
 
-    build="make"
+    build="make -j4"
 
     install="make install"
 
