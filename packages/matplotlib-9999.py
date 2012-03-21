@@ -1,4 +1,4 @@
 from package import *
 
 class matplotlib(EasyInstallPackage):
-    dependencies = ["python","numpy","freetype","pyside","libpng"]
+    dependencies = ["setuptools","python","numpy","freetype","pyside","libpng"]
