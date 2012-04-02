@@ -29,10 +29,11 @@ class PackageManager(object):
             apps.append(self.apps[appname])
         return apps
 
-    def addConstraint(appname, constraint, temporary=True):
+    def addConstraint(self, constraint, temporary=True):
+        appname = constraint[0]
         if not appname in self.apps:
             error("unknown application name: " + str(appname))
-        self.apps[appname].addConstraint(constraint, temporary=temporary)
+        self.apps[appname] = self.apps[appname].addConstraint(constraint, temporary=temporary)
 
     def get_applications(self):
         package_dir = os.path.join(self.distpath, 'packages')
