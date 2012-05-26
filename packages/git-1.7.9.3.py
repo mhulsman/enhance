@@ -1,7 +1,7 @@
 from package import *
 
 class git(Package):
-    dependencies = ["python"]
+    dependencies = ["python",'openssl']
 
     fetch="http://git-core.googlecode.com/files/git-1.7.9.3.tar.gz"
 
