@@ -7,7 +7,7 @@ import urllib2
 import urlparse
 import os
 from os import path
-from distutils.dir_util import mkpath
+from distutils.dir_util import mkpath, remove_tree
 import sys
 import shutil
 import inspect
@@ -108,6 +108,9 @@ def unpack(filename, workdir=""):
         else:
             raise RuntimeError, "Cannot determine work directory"
     
+    if os.path.isdir(workdir):
+        remove_tree(workdir)
+   
     if filename.endswith('bz2'):
         runCommand("tar -xjf " + filename)
     elif filename.endswith('zip'):
