@@ -69,7 +69,9 @@ def list():
     p = PackageManager(get_src_path(init))
 
     print "Available applications:"
-    for a in p.apps.values():
+    l = [a for a in p.apps.values()]
+    l.sort(key=lambda x: x.name)
+    for a in l:
         print '- ' + str(a)
 
 def install(packages):

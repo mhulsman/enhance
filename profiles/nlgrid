@@ -6,3 +6,8 @@ version = 1.2.7
 state = available
 version = 7.26.0
 
+[e2fsprogs]
+state = available
+version = 1.42.3
+
+
