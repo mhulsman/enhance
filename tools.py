@@ -103,13 +103,15 @@ def unpack(filename, workdir=""):
             workdir = filename[:-7]
         elif filename.endswith('.tar.bz2'):
             workdir = filename[:-8]
-        elif filename.endswith('.tgz'):
+        elif filename.endswith('.tgz') or filename.endswith('.zip'):
             workdir = filename[:-4]
         else:
             raise RuntimeError, "Cannot determine work directory"
     
     if filename.endswith('bz2'):
         runCommand("tar -xjf " + filename)
+    elif filename.endswith('zip'):
+        runCommand("unzip " + filename)
     else:
         runCommand("tar -xzf " + filename)
     return workdir

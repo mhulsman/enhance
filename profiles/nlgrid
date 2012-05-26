@@ -1,0 +1,8 @@
+[zlib]
+state = available
+version = 1.2.7
+
+[curl]
+state = available
+version = 7.26.0
+
