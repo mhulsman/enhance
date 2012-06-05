@@ -7,6 +7,6 @@ class atlas(MakePackage):
 
     workdir = "ATLAS/build_dir"
 
-    config="../configure -Fa alg -fPIC --with-netlib-lapack=%(prefix)s/lib/lapack_LINUX.a --prefix=%(prefix)s"
+    config="../configure -Fa alg -fPIC --with-netlib-lapack=%(prefix)s/lib/lapack_LINUX.a --prefix=%(prefix)s -Si cputhrchk 0"
 
     build = "make -j1"
