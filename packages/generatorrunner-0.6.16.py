@@ -2,7 +2,7 @@ from package import *
 
 class generatorrunner(MakePackage):
     dependencies=['apiextractor']
-    fetch="http://www.pyside.org/files/generatorrunner-%(version)s.tar.bz2"
+    fetch="https://distfiles.macports.org/generatorrunner/generatorrunner-%(version)s.tar.bz2"
     modify_environ = {'PYSIDESANDBOXPATH':'%(prefix)s'}
 
     build_reldir = "build"

@@ -2,7 +2,7 @@ from package import *
 
 class apiextractor(MakePackage):
     dependencies=['qt','libxml','libxslt','python','cmake']
-    fetch="http://www.pyside.org/files/apiextractor-0.10.10.tar.bz2"
+    fetch="https://distfiles.macports.org/apiextractor/apiextractor-%(version)s.tar.bz2"
     modify_environ = {'PYSIDESANDBOXPATH':'%(prefix)s'}
 
     build_reldir = "build"
