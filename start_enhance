@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ENHANCE_DIR=ONAME
+ENHANCE_DIR=$ONAME
 CUR_DIR=`pwd`
 
 source $ENHANCE_DIR/paths
