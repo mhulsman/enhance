@@ -1,7 +1,7 @@
 from package import *
 
 class python(MakePackage):
-    dependencies=["bzip2","ncurses", "sqlite","readline","zlib"]
+    dependencies=["bzip2","ncurses", "sqlite","readline", "zlib", "openssl"]
     fetch="http://www.python.org/ftp/python/2.7/Python-2.7.tgz"
 
     config="./configure --enable-shared --prefix=%(prefix)s"
