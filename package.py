@@ -224,4 +224,4 @@ class PythonPackage(Package):
 class EasyInstallPackage(Package):
     dependencies = ["setuptools"]
     workdir="%(prefix)s"
-    install="easy_install %(name)s"
+    install="easy_install -U %(name)s"
