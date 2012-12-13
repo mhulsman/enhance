@@ -1,0 +1,14 @@
+--- common.h	2012-12-13 10:07:15.083852000 +0100
++++ ../../common.h	2012-07-02 16:01:26.000000000 +0200
+@@ -22,11 +22,6 @@
+ using boost::math::normal;
+ 
+ #include <boost/foreach.hpp>
+-namespace boost {
+-    #if BOOST_VERSION != 104900
+-    namespace BOOST_FOREACH = foreach;
+-    #endif
+-} // namespace boost
+ #define foreach         BOOST_FOREACH
+ #define reverse_foreach BOOST_REVERSE_FOREACH
+ 
