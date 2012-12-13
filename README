@@ -1,0 +1,31 @@
+Enhance is a package manager for home directories
+
+Creating an environment
+=======================
+
+1. Download enhance
+
+2. Create the directory in which you will place your enhance environment, e.g. mkdir env
+
+3. cd env
+
+4. path_to_enhance_dir/enhance init generic
+
+
+Viewing available/installed packages
+====================================
+
+enhance list
+
+
+Installing packages
+===================
+
+enhance install <packagename>
+
+
+Starting environment
+====================
+
+start_enhance
+
