@@ -21,6 +21,6 @@ class ratt(MakePackage):
         cd %(prefix)s/opt/ratt
         ln -f -s ../opt/ratt/start.ratt.sh %(prefix)s/bin/
         cat %(rootpath)s/paths | grep -v RATT_HOME > temppath
-        echo "export RATT_HOME=%(prefix)s" >> temppath
+        echo "export RATT_HOME=%(prefix)s/opt/ratt" >> temppath
         cp temppath %(rootpath)s/paths
     """ 
