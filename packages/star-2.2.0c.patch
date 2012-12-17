@@ -1,0 +1,11 @@
+--- Makefile	2012-11-19 04:12:32.000000000 +0100
++++ Makefile.new	2012-12-16 10:30:32.729569000 +0100
+@@ -10,7 +10,7 @@
+ 	TimeFunctions.o ErrorWarning.o
+ 
+ SOURCES=$(wildcard *.cpp)
+-LDFLAGS := -static -static-libgcc -pthread
++LDFLAGS := -pthread
+ SVNDEF := -D'SVN_VERSION_COMPILED="STAR_2.2.0c_r200"'
+ COMPTIMEPLACE := -D'COMPILATION_TIME_PLACE="$(shell echo `date` $(HOSTNAME):`pwd`)"'
+ #OPTIMFLAGS=-fforce-addr -funsafe-loop-optimizations -ftree-loop-linear -ftree-vectorize 

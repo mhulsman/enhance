@@ -114,7 +114,7 @@ def unpack(filename, workdir=""):
     if filename.endswith('bz2'):
         runCommand("tar -xjf " + filename)
     elif filename.endswith('zip'):
-        runCommand("unzip " + filename)
+        runCommand("unzip -o " + filename)
     else:
         runCommand("tar -xzf " + filename)
     return workdir
