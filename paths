@@ -1,8 +1,8 @@
 #!/bin/bash
-export PATH=ONAME/sys_enhance/bin:$PATH
-export PYTHONPATH=ONAME/sys_enhance/lib/python27.zip:ONAME/sys_enhance/bin/lib/python2.7:ONAME/sys_enhance/lib/python2.7/plat-linux2:ONAME/sys_enhance/lib/python2.7/lib-tk:ONAME/sys_enhance/lib/python2.7/lib-old:ONAME/sys_enhance/lib/python2.7/lib-dynload:ONAME/sys_enhance/lib/python2.7/site-packages
-export MANPATH=ONAME/sys_enhance/share/man:$MANPATH
-export LD_LIBRARY_PATH=ONAME/sys_enhance/lib:ONAME/sys_enhance/lib64:$LD_LIBRARY_PATH
-export LIBRARY_PATH=ONAME/sys_enhance/lib:ONAME/sys_enhance/lib64
-export CPATH=ONAME/sys_enhance/include:$CPATH
-export PKG_CONFIG_PATH=ONAME/sys_enhance/lib64/pkgconfig:$PKG_CONFIG_PATH
+export PATH=$(ONAME/sys_enhance/bin:$PATH | sed -e s/:$//)
+export PYTHONPATH=$(ONAME/sys_enhance/lib/python27.zip:ONAME/sys_enhance/bin/lib/python2.7:ONAME/sys_enhance/lib/python2.7/plat-linux2:ONAME/sys_enhance/lib/python2.7/lib-tk:ONAME/sys_enhance/lib/python2.7/lib-old:ONAME/sys_enhance/lib/python2.7/lib-dynload:ONAME/sys_enhance/lib/python2.7/site-packages | sed -e s/:$//)
+export MANPATH=$(ONAME/sys_enhance/share/man:$MANPATH | sed -e s/:$//)
+export LD_LIBRARY_PATH=$(ONAME/sys_enhance/lib:ONAME/sys_enhance/lib64:$LD_LIBRARY_PATH | sed -e s/:$//)
+export LIBRARY_PATH=$(ONAME/sys_enhance/lib:ONAME/sys_enhance/lib64 | sed -e s/:$//)
+export CPATH=$(ONAME/sys_enhance/include:$CPATH | sed -e s/:$//)
+export PKG_CONFIG_PATH=$(ONAME/sys_enhance/lib64/pkgconfig:$PKG_CONFIG_PATH | sed -e s/:$//)

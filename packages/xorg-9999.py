@@ -39,6 +39,9 @@ class xorg(MakePackage):
 
     modify_environ={'PREFIX':'%(prefix)s'}
     
-    build = "util/modular/build.sh --modfile module_list --clone %(prefix)s"
+    build = """
+            export
+            util/modular/build.sh --modfile module_list --clone %(prefix)s
+            """
     
     install = ""

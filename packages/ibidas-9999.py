@@ -1,4 +1,4 @@
 from package import *
 
 class ibidas(EasyInstallPackage):
-    dependencies = ['ipython','numpy']
+    dependencies = ['ipython','numpy','pyparsing']

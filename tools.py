@@ -37,7 +37,10 @@ def source_env(path):
             continue
         name, value = line[6:].strip().split('=')
         value = value.replace("$" + name, os.environ.get(name,""))
-        os.environ[name] = value
+        value = value.strip()
+        if value.startswith('$(') and value.endswith(')'):
+            value = getCommandOutput(value[2:-1])
+        os.environ[name] = value.strip()
 
 def download(url, filename=None):
     #based on stackoverflow answer
@@ -134,6 +137,11 @@ def getCommandOutput(cmd):
     if p.returncode != 0:
         raise RuntimeError, "Command failed"
     return res
+
+
+def platformContains(value):
+    q = getCommandOutput('uname -a')
+    return value in q
 
 def error(msg):
     print "\033[41mERROR: " + msg + "\033[0m"

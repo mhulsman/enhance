@@ -212,7 +212,7 @@ class Package(object):
 class MakePackage(Package):
     config="./configure --prefix=%(prefix)s"
 
-    build="make -j4"
+    build="make -j32"
 
     install="make install"
 
