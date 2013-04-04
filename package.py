@@ -21,7 +21,6 @@ class Package(object):
         return self.state
 
     def setState(self, state):
-        self.state = state
         self.application.setState(self, state)
 
     def parseFilename(self, filename):
@@ -212,7 +211,7 @@ class Package(object):
 class MakePackage(Package):
     config="./configure --prefix=%(prefix)s"
 
-    build="make -j32"
+    build="make -j16"
 
     install="make install"
 

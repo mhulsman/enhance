@@ -7,11 +7,11 @@ class xorg(MakePackage):
                 'proto/bigreqsproto','proto/xextproto','proto/kbproto','proto/inputproto',\
                 'proto/xf86bigfontproto','proto/xcmiscproto','proto/x11proto',\
                 'proto/xextproto','proto/renderproto','proto/fixesproto',\
-                'proto/xineramaproto','proto/randrproto',\
+                'proto/xineramaproto','proto/randrproto','proto/fontsproto',\
                 'lib/libXau','xcb/libxcb','lib/libxtrans',\
                 'lib/libXdmcp','lib/libX11','lib/libICE','lib/libSM',\
                 'lib/libXt','lib/libXext','lib/libXfixes','lib/libXrender','lib/libXi',\
-                'lib/libXinerama','lib/libXrandr','lib/libXcursor',\
+                'lib/libXinerama','lib/libXrandr','lib/libXcursor','lib/libfontenc','lib/libXfont', 'app/mkfontscale','app/mkfontdir','app/bdftopcf',\
                 'font/encodings','font/adobe-100dpi','font/adobe-75dpi','font/adobe-utopia-100dpi',\
                 'font/adobe-utopia-75dpi','font/adobe-utopia-type1','font/arabic-misc','font/bh-100dpi',\
                 'font/bh-75dpi','font/bh-lucidatypewriter-100dpi','font/bh-lucidatypewriter-75dpi','font/bh-ttf',\

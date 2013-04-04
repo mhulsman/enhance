@@ -12,6 +12,7 @@ class Application(object):
         self.package_manager = package_manager
 
     def switchVersion(self, version):
+        self.package_manager.loadConfig()
         if self.cur_version is None:
             self.cur_version = version
         elif self.cur_version == version:
@@ -23,9 +24,11 @@ class Application(object):
         self.package_manager.writeConfig()            
 
     def setState(self, version, state):
+        self.package_manager.loadConfig()
         if not self.cur_version is None:
             assert self.cur_version == version, "Version state change for non-current version"
         self.cur_version = version
+        version.state = state
         self.state = state
         self.package_manager.writeConfig()            
 

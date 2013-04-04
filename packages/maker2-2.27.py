@@ -1,7 +1,7 @@
 from package import *
 
 class maker2(MakePackage):
-    dependencies = ['perl','bioperl','ncbi_blast','snap','repeatmasker','exonerate','augustus','genemark_es','zlib']
+    dependencies = ['perl','bioperl','ncbi_blast','snap','repeatmasker','exonerate','augustus','genemark_es','zlib','postgresql']
     def fetch(self):
         f = self.fillVars('%(srcpath)s/maker-2.27-beta.tgz')
         if not os.path.isfile(f):

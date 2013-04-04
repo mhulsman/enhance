@@ -12,7 +12,7 @@ class bioperl(Package):
             """
 
     build = """
-            PERL_MM_USE_DEFAULT=1 .perl ./Build.PL
+            PERL_MM_USE_DEFAULT=1 perl ./Build.PL
             PERL_MM_USE_DEFAULT=1 ./Build 
            """
 

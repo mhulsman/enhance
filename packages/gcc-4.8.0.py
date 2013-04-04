@@ -1,9 +1,9 @@
 from package import *
 class gcc(MakePackage):
-    dependencies=['ppl==0.11.2','cloogppl==0.15.11','mpc','mpfr','gmp']
+    dependencies=['cloog==0.18.0','mpc','mpfr','gmp']
     modify_environ={'LIBRARY_PATH':''}
 
-    fetch='ftp://ftp.nluug.nl/mirror/languages/gcc/releases/gcc-4.6.2/gcc-4.6.2.tar.gz'
-    workdir="gcc-4.6.2/build"
+    fetch='ftp://ftp.nluug.nl/mirror/languages/gcc/releases/gcc-%(version)s/gcc-%(version)s.tar.gz'
+    workdir="gcc-%(version)s/build"
     config="../configure --prefix=%(prefix)s --with-ppl=%(prefix)s --with-cloog=%(prefix)s -with-mpc=%(prefix)s --with-mpfr=%(prefix)s -with-gmp=%(prefix)s --disable-multilib"
     

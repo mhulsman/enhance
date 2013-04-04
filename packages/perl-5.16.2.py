@@ -1,8 +1,9 @@
 from package import *
 
 class perl(MakePackage):
+  dependencies=['openssl','zlib','bzip2','berkeleydb','gdbm']
   fetch="http://www.cpan.org/src/5.0/perl-5.16.2.tar.gz"
-  config="sh Configure -de -Dprefix='%(prefix)s'"
+  config="sh Configure -de -Dprefix='%(prefix)s' -Dusethreads"
 
   install="""
           make install
