@@ -11,7 +11,7 @@ class maker2(MakePackage):
     workdir='maker'
 
 
-    modules = ['DBI','DBD::SQLite','Proc::ProcessTable','threads','IO::All','IO::Prompt','File::Which','Perl::Unsafe::Signals','Bit::Vector','Inline::C','PerlIO::gzip','Bio::Root::Version','forks','forks::shared','Bio::ASN1::EntrezGene','DBD::Pg']
+    modules = ['DBI','DBD::SQLite','Proc::ProcessTable','threads','IO::All','IO::Prompt','File::Which','Perl::Unsafe::Signals','Bit::Vector','Inline::C','PerlIO::gzip','Bio::Root::Version','forks','forks::shared','Bio::ASN1::EntrezGene','DBD::Pg','URI::Escape']
     def config(self):
         for module in self.modules:
             runCommand(self.fillVars('PERL_MM_USE_DEFAULT=1 INC="-I%(prefix)s/include" cpan ') +  module )

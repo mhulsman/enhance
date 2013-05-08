@@ -1,0 +1,10 @@
+--- Genome.cpp.old	2013-04-23 20:54:40.943718000 +0200
++++ Genome.cpp	2013-04-23 20:53:50.876797000 +0200
+@@ -6,6 +6,7 @@
+ #include "streamFuns.h"
+ #include <time.h>
+ #include <cmath>
++#include <unistd.h>
+ 
+ #define SHM_sizeG 0
+ #define SHM_sizeSA 8
