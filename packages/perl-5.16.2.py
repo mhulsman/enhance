@@ -7,7 +7,7 @@ class perl(MakePackage):
 
   install="""
           make install
-          echo "export PERL5LIB=$(echo %(prefix)s/lib/perl5/site_perl/%(version)s/x86_64-linux:$PERL5LIB | sed -e s/:$//)" >> %(prefix)s/../paths
+          echo "export PERL5LIB=$(echo %(prefix)s/lib/perl5/site_perl/%(version)s/x86_64-linux:%(prefix)s/lib/perl5/%(version)s:$PERL5LIB | sed -e s/:$//)" >> %(prefix)s/../paths
           
           (echo y;echo o conf makepl_arg \"PREFIX=%(prefix)s\";echo o conf commit)|cpan
 
