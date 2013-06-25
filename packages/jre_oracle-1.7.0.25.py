@@ -12,7 +12,8 @@ class jre_oracle(Package):
     workdir='jre1.7.0_25'
 
     install="""
+                mv lib lib64
                 rsync -av * %(prefix)s
-                rsync -av lib/amd64/* %(prefix)s/lib64/
+                rsync -av lib64/amd64/* %(prefix)s/lib64/
                 
             """ 
