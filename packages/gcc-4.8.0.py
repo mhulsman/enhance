@@ -5,5 +5,5 @@ class gcc(MakePackage):
 
     fetch='ftp://ftp.nluug.nl/mirror/languages/gcc/releases/gcc-%(version)s/gcc-%(version)s.tar.gz'
     workdir="gcc-%(version)s/build"
-    config="../configure --prefix=%(prefix)s --with-ppl=%(prefix)s --with-cloog=%(prefix)s -with-mpc=%(prefix)s --with-mpfr=%(prefix)s -with-gmp=%(prefix)s --disable-multilib"
+    config="../configure --prefix=%(prefix)s --with-ppl=%(prefix)s --with-cloog=%(prefix)s -with-mpc=%(prefix)s --with-mpfr=%(prefix)s -with-gmp=%(prefix)s --disable-multilib --disable-libstdcxx-pch"
     
