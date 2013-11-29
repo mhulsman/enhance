@@ -211,7 +211,7 @@ class Package(object):
 class MakePackage(Package):
     config="./configure --prefix=%(prefix)s"
 
-    build="make -j16"
+    build="make"
 
     install="make install"
 
