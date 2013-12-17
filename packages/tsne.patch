@@ -1,0 +1,30 @@
+diff -u ../tsne/compile_linux ./compile_linux
+--- ../tsne/compile_linux	2013-01-31 13:40:49.000000000 +0100
++++ ./compile_linux	2013-11-20 15:59:37.052106000 +0100
+@@ -1,2 +1,2 @@
+ echo "Make sure to change the path to CBLAS in this file before running it!"
+-g++ quadtree.cpp tsne.cpp -o bh_tsne -O3 -I./CBLAS/include -L./ -lcblas
+\ No newline at end of file
++g++ quadtree.cpp tsne.cpp -o bh_tsne -O3 -IPLACEHOLDERgsl -lgslcblas
+diff -u ../tsne/quadtree.cpp ./quadtree.cpp
+--- ../tsne/quadtree.cpp	2013-03-20 19:43:15.000000000 +0100
++++ ./quadtree.cpp	2013-11-20 15:54:07.032186000 +0100
+@@ -32,7 +32,7 @@
+ 
+ #include <math.h>
+ #include <float.h>
+-#include <cblas.h>
++#include "gsl_cblas.h"
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include "quadtree.h"
+diff -u ../tsne/tsne.cpp ./tsne.cpp
+--- ../tsne/tsne.cpp	2013-03-20 19:43:31.000000000 +0100
++++ ./tsne.cpp	2013-11-20 15:53:56.557364000 +0100
+@@ -43,7 +43,7 @@
+ #include "tsne.h"
+ 
+ extern "C" {
+-    #include <cblas.h>
++    #include "gsl_cblas.h"
+ }

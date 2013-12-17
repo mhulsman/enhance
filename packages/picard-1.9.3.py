@@ -2,7 +2,7 @@ from package import *
 
 
 class picard(Package):
-    fetch="http://downloads.sourceforge.net/project/picard/picard-tools/1.81/picard-tools-1.81.zip"
+    fetch="http://downloads.sourceforge.net/project/picard/picard-tools/1.93/picard-tools-1.93.zip"
     
     build="""
     mkdir -p %(prefix)s/opt/picard
