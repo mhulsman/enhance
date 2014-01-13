@@ -1,0 +1,10 @@
+7c7
+< AM_CONFIG_HEADER([config.h])
+---
+> #AM_CONFIG_HEADER([config.h])
+30,31c30,31
+<                  src/utilities/Makefile
+< 		 src/getPathWeights/Makefile])
+---
+>                  src/utilities/Makefile])
+> #		 src/getPathWeights/Makefile])
