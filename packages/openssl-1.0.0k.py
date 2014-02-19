@@ -6,7 +6,7 @@ class openssl(MakePackage):
     def config(self):
         q = getCommandOutput('uname -a')
         if platformContains('ppc64'):
-            print 'Usin powerpc configure'
+            print 'Using powerpc configure'
             runCommand(self.fillVars("./Configure linux-ppc64  shared --prefix=%(prefix)s"))
         else:
             runCommand(self.fillVars("./config shared --prefix=%(prefix)s"))

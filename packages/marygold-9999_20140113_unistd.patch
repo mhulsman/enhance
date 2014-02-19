@@ -1,0 +1,88 @@
+Only in ../metavar-code/src/bnk2gml: .deps
+Only in ../metavar-code/src/bnk2gml: Makefile
+Only in ../metavar-code/src/bnk2gml: Makefile.in
+diff -ru src/bnk2gml/bnk2gml.cpp ../metavar-code/src/bnk2gml/bnk2gml.cpp
+--- src/bnk2gml/bnk2gml.cpp	2014-01-13 17:34:11.455018000 +0100
++++ ../metavar-code/src/bnk2gml/bnk2gml.cpp	2014-01-13 17:22:06.234997000 +0100
+@@ -2,6 +2,7 @@
+ #include "Utilities_Bundler.hh"
+ #include "Motif_AMOS.hh"
+ #include <set>
++#include <unistd.h>
+ 
+ using namespace std;
+ using namespace AMOS;
+Only in ../metavar-code/src/buildMotifs: .deps
+Only in ../metavar-code/src/buildMotifs: Makefile
+Only in ../metavar-code/src/buildMotifs: Makefile.in
+Only in ../metavar-code/src/getSeppairs: .deps
+Only in ../metavar-code/src/getSeppairs: Makefile
+Only in ../metavar-code/src/getSeppairs: Makefile.in
+diff -ru src/getSeppairs/getSeppairs.cpp ../metavar-code/src/getSeppairs/getSeppairs.cpp
+--- src/getSeppairs/getSeppairs.cpp	2014-01-13 17:34:11.794059000 +0100
++++ ../metavar-code/src/getSeppairs/getSeppairs.cpp	2014-01-13 17:30:19.407778000 +0100
+@@ -13,6 +13,7 @@
+ #include <unordered_map>
+ #include <set>
+ #include <vector>
++#include <unistd.h>
+ 
+ using namespace ogdf;
+ 
+@@ -760,4 +761,4 @@
+ 	parse_command_line(argc, argv);
+ 	getSPQRForAllCC();
+   return 0;
+-}
+\ No newline at end of file
++}
+Only in ../metavar-code/src/readMembership: .deps
+Only in ../metavar-code/src/readMembership: Makefile
+Only in ../metavar-code/src/readMembership: Makefile.in
+diff -ru src/readMembership/readDepth2member.cpp ../metavar-code/src/readMembership/readDepth2member.cpp
+--- src/readMembership/readDepth2member.cpp	2014-01-13 17:34:11.871041000 +0100
++++ ../metavar-code/src/readMembership/readDepth2member.cpp	2014-01-13 17:29:07.337095000 +0100
+@@ -4,7 +4,7 @@
+ #include <vector>
+ #include <unordered_map>
+ #include "ReadDepths.h"
+-
++#include <unistd.h>
+ 
+ using namespace std;
+ 
+Only in ../metavar-code/src/utilities: .deps
+Only in ../metavar-code/src/utilities: Makefile
+Only in ../metavar-code/src/utilities: Makefile.in
+diff -ru src/utilities/fixFragmentLib.cpp ../metavar-code/src/utilities/fixFragmentLib.cpp
+--- src/utilities/fixFragmentLib.cpp	2014-01-13 17:34:11.889055000 +0100
++++ ../metavar-code/src/utilities/fixFragmentLib.cpp	2014-01-13 17:31:45.240528000 +0100
+@@ -6,6 +6,7 @@
+ #include "Fragment_AMOS.hh"
+ #include "Read_AMOS.hh"
+ #include "Bank_AMOS.hh"
++#include <unistd.h>
+ 
+ using namespace std;
+ using namespace AMOS;
+diff -ru src/utilities/iid2eid.cpp ../metavar-code/src/utilities/iid2eid.cpp
+--- src/utilities/iid2eid.cpp	2014-01-13 17:34:11.893061000 +0100
++++ ../metavar-code/src/utilities/iid2eid.cpp	2014-01-13 17:31:02.259136000 +0100
+@@ -1,5 +1,6 @@
+ #include <iostream>
+ #include "Utilities_Bundler.hh"
++#include <unistd.h>
+ 
+ using namespace std;
+ using namespace AMOS;
+diff -ru src/utilities/remove_RED_FRG.cpp ../metavar-code/src/utilities/remove_RED_FRG.cpp
+--- src/utilities/remove_RED_FRG.cpp	2014-01-13 17:34:11.903058000 +0100
++++ ../metavar-code/src/utilities/remove_RED_FRG.cpp	2014-01-13 17:32:45.492258000 +0100
+@@ -3,6 +3,7 @@
+ #include <string>
+ #include <vector>
+ #include <set>
++#include <unistd.h>
+ 
+ #include "Library_AMOS.hh"
+ #include "Fragment_AMOS.hh"
