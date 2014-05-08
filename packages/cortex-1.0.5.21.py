@@ -2,7 +2,7 @@ from package import *
 
 class cortex(MakePackage):
   
-  dependencies=[]
+  dependencies=['stampy','vcftools']
 
   fetch='http://downloads.sourceforge.net/project/cortexassembler/cortex_var/latest/CORTEX_release_v1.0.5.21.tgz'
   
@@ -12,9 +12,9 @@ class cortex(MakePackage):
 
   build="""
     make NUM_COLS=1 cortex_var
-    make NUM_COLS=10 cortex_var
+    make NUM_COLS=2 cortex_var
     make NUM_COLS=1 MAXK=63 cortex_var
-    make NUM_COLS=10 MAXK=63 cortex_var
+    make NUM_COLS=2 MAXK=63 cortex_var
   """
 
   install="""
