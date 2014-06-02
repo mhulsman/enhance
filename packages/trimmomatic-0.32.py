@@ -16,7 +16,7 @@ class trimmomatic(Package):
         print "Trimmomatic installed in: " + ppath
         print "Bin directory: " +bpath
 
-        file = 'trimmomatic-0.22.jar'
+        file = 'trimmomatic-0.32.jar'
         print "Installing shell script for: " + file
         bn,rest = os.path.splitext(file)
 

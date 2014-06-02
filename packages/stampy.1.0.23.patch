@@ -1,0 +1,8 @@
+44c44
+< 	g++ `$(python)-config --ldflags` -pthread -shared -Wl $(objs) -o maptools.so
+---
+> 	g++ `$(python)-config --ldflags` -pthread -shared -Wall $(objs) -o maptools.so
+46c46
+< 	g++ `$(python)-config --ldflags` -pthread -dynamiclib -Wl $(objs) -o maptools.so
+---
+> 	g++ `$(python)-config --ldflags` -pthread -dynamiclib -Wall $(objs) -o maptools.so

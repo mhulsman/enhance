@@ -104,6 +104,8 @@ def unpack(filename, workdir=""):
     if not workdir:
         if filename.endswith('.tar.gz'):
             workdir = filename[:-7]
+        elif filename.endswith('.tar.xz'):
+            workdir = filename[:-7]
         elif filename.endswith('.tar.bz2'):
             workdir = filename[:-8]
         elif filename.endswith('.tgz') or filename.endswith('.zip'):
@@ -118,6 +120,8 @@ def unpack(filename, workdir=""):
         runCommand("tar -xjf " + filename)
     elif filename.endswith('zip'):
         runCommand("unzip -o " + filename)
+    elif filename.endswith('.tar.xz'):
+        runCommand("tar -xf " + filename)
     else:
         runCommand("tar -xzf " + filename)
     return workdir
