@@ -1,0 +1,14 @@
+24c24
+< ifeq ($(shell $(CC) -dumpversion | awk -F '.' '$$1*100+$$2>404{print "yes"}'),yes)
+---
+> #ifeq ($(shell $(CC) -dumpversion | awk -F '.' '$$1*100+$$2>404{print "yes"}'),yes)
+26,29c26,29
+< endif
+< ifneq ($(shell uname -s),Darwin)
+<     STATIC   = -static
+< endif
+---
+> #endif
+> #ifneq ($(shell uname -s),Darwin)
+> #    STATIC   = -static
+> #endif
