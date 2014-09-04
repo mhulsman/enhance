@@ -33,6 +33,7 @@ def writeConfig(filename, config):
     creates sections based that list
     use config.set to add entries to each section
     """
+    oldmask = os.umask(0000)
     cp = ConfigParser.ConfigParser()
 
     sections = config.keys()
@@ -41,5 +42,5 @@ def writeConfig(filename, config):
         for opt, value in secconfig.iteritems():
             cp.set(sec, opt, value)
     cp.write(open(filename, "w"))
-
+    os.umask(oldmask)
 

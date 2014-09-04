@@ -25,6 +25,7 @@ def help_and_exit():
 
 
 def init(profile):
+    oldmask = os.umask(0000)
     srcpath = get_src_path(init)
 
     if srcpath == os.getcwd():
@@ -64,6 +65,7 @@ def init(profile):
 
     print "\033[32mEnhance, profile \033[34m\033[1m" + str(profile) + "\033[0m\033[32m initialized in \033[0m\033[33m" + os.getcwd()  + "\033[0m"
     list()
+    os.umask(oldmask)
 
 def list():
     p = PackageManager(get_src_path(init))
