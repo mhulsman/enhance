@@ -6,7 +6,8 @@ class quiver(PythonPackage):
     def fetch(self):
         runCommand("git clone https://github.com/PacificBiosciences/GenomicConsensus")
 
-    workdir="ConsensusCore"
+    workdir="GenomicConsensus"
 
     unpack=""
 
+    install="python setup.py install"
