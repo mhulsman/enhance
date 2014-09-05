@@ -58,6 +58,7 @@ def download(url, filename=None):
     except urllib2.HTTPError, e:
         error("Could not download %s, error: %s" %(str(url), str(e)))
         
+    oldmask = os.umask(0000)
         
     try:
         filename = filename or getFileName(url,u)
@@ -89,6 +90,7 @@ def download(url, filename=None):
         f.close()
     finally:
         u.close()
+        os.umask(oldmask)
     return filename
 
 def is_gzipfile(filename):
@@ -104,6 +106,8 @@ def unpack(filename, workdir=""):
     if not workdir:
         if filename.endswith('.tar.gz'):
             workdir = filename[:-7]
+        elif filename.endswith('.tar.xz'):
+            workdir = filename[:-7]
         elif filename.endswith('.tar.bz2'):
             workdir = filename[:-8]
         elif filename.endswith('.tgz') or filename.endswith('.zip'):
@@ -118,11 +122,18 @@ def unpack(filename, workdir=""):
         runCommand("tar -xjf " + filename)
     elif filename.endswith('zip'):
         runCommand("unzip -o " + filename)
+    elif filename.endswith('.tar.xz'):
+        runCommand("tar -xf " + filename)
     else:
         runCommand("tar -xzf " + filename)
+    
+    runCommand('find %s -type d ! -perm -g+rwxs -print0 | xargs -0 chmod g+rwxs' % workdir)
+    runCommand('find %s -type f ! -perm -g+rwxs -print0 | xargs -0 chmod g+rw' % workdir)
+
     return workdir
 
 def runCommand(cmd,exception=False):
+    oldmask = os.umask(0000)
     #print "Executing: \n" + cmd
     res = subprocess.call(cmd,shell=True)
     if not res == 0:
@@ -130,12 +141,15 @@ def runCommand(cmd,exception=False):
             raise RuntimeError, "Command failed"
         else:
             error('The following command failed: ' + cmd)
+    os.umask(oldmask)
 
 def getCommandOutput(cmd):
+    oldmask = os.umask(0000)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     res = p.communicate()[0]
     if p.returncode != 0:
         raise RuntimeError, "Command failed"
+    os.umask(oldmask)
     return res
 
 
