@@ -1,0 +1,8 @@
+--- Makefile.linux	2014-10-02 01:02:55.000000000 +0200
++++ Makefile.linux2	2014-11-13 10:44:10.758780000 +0100
+@@ -1,4 +1,4 @@
+-GSL = /usr/lib/libgsl.a /usr/lib/libgslcblas.a
++GSL = ../../sys_enhance/lib64/libgsl.a ../../sys_enhance/lib64/libgslcblas.a
+ 
+ build/msmc : model/*.d powell.d brent.d maximization_step.d expectation_step.d msmc.d branchlength.d logger.d
+ 	dmd -O ${GSL} -release -odbuild -ofbuild/msmc $^

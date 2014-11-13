@@ -126,20 +126,20 @@ def unpack(filename, workdir=""):
         runCommand("tar -xf " + filename)
     else:
         runCommand("tar -xzf " + filename)
-    
-    runCommand('find %s -type d ! -perm -g+rwxs -print0 | xargs -0 chmod g+rwxs' % workdir)
-    runCommand('find %s -type f ! -perm -g+rwxs -print0 | xargs -0 chmod g+rw' % workdir)
+   
+    runCommand('find %s -type d ! -perm -g+rwxs -print0 | xargs -0 chmod g+rwxs' % workdir, exception = None)
+    runCommand('find %s -type f ! -perm -g+rwxs -print0 | xargs -0 chmod g+rw' % workdir, exception = None)
 
     return workdir
 
-def runCommand(cmd,exception=False):
+def runCommand(cmd, exception = False):
     oldmask = os.umask(0000)
     #print "Executing: \n" + cmd
     res = subprocess.call(cmd,shell=True)
     if not res == 0:
-        if exception:
+        if exception == True:
             raise RuntimeError, "Command failed"
-        else:
+        elif exception == False:
             error('The following command failed: ' + cmd)
     os.umask(oldmask)
 
