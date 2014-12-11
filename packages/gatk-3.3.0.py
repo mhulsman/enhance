@@ -4,12 +4,12 @@ from package import *
 class gatk(Package):
     dependencies = ['jre_oracle']
     def fetch(self):
-        f = self.fillVars('%(srcpath)s/GenomeAnalysisTK-3.2-2.tar.bz2')
+        f = self.fillVars('%(srcpath)s/GenomeAnalysisTK-3.3-0.tar.bz2')
         if not os.path.isfile(f):
             error('Please supply source file: %s' %f)
         return f
     
-    workdir="gatk-3.2-2"
+    workdir="gatk-3.3-0"
     create_workdir=True
 
     build="""
