@@ -111,10 +111,11 @@ class Package(object):
 
     def Unpack(self, package_file):
         workdir = getattr(self,"workdir","")
+        create_workdir = getattr(self,"create_workdir",False)
         if package_file:
             info(self.instance_name, "unpack")
             if not hasattr(self, "unpack"):
-                workdir = unpack(package_file, workdir)
+                workdir = unpack(package_file, workdir, create_workdir)
             else:
                 workdir = self.unpack(package_file, workdir)
             if not hasattr(self, "workdir"):

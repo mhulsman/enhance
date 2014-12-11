@@ -101,7 +101,7 @@ def is_gzipfile(filename):
     except Exception:
         return False
 
-def unpack(filename, workdir=""):
+def unpack(filename, workdir="", create_workdir=False):
     res = []
     if not workdir:
         if filename.endswith('.tar.gz'):
@@ -114,10 +114,14 @@ def unpack(filename, workdir=""):
             workdir = filename[:-4]
         else:
             raise RuntimeError, "Cannot determine work directory"
-    
+            
     if os.path.isdir(workdir):
         remove_tree(workdir)
-   
+    if create_workdir:
+        os.mkdir(workdir)
+        curcwd = os.getcwd()
+        os.chdir(workdir)
+
     if filename.endswith('bz2'):
         runCommand("tar -xjf " + filename)
     elif filename.endswith('zip'):
@@ -126,7 +130,10 @@ def unpack(filename, workdir=""):
         runCommand("tar -xf " + filename)
     else:
         runCommand("tar -xzf " + filename)
-    
+
+    if create_workdir:
+        os.chdir(curcwd)
+
     runCommand('find %s -type d ! -perm -g+rwxs -print0 | xargs -0 chmod g+rwxs' % workdir)
     runCommand('find %s -type f ! -perm -g+rwxs -print0 | xargs -0 chmod g+rw' % workdir)
 
