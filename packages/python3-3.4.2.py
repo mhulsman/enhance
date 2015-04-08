@@ -12,5 +12,6 @@ class python3(MakePackage):
             mv %(prefix)s/bin/python3.4 %(prefix)s/bin/python3.4exec
             echo '#!/bin/bash\nPYTHONPATH=%(prefix)s/lib/python3.4/\npython3.4exec $@\n' > %(prefix)s/bin/python3.4
             chmod +x %(prefix)s/bin/python3.4
+            ln -f -s %(prefix)s/bin/easy_install-3.4 %(prefix)s/bin/easy_install3
             """
 

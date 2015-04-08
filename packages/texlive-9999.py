@@ -5,7 +5,12 @@ class texlive(Package):
     import tarfile;
 
     fetch   = "http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz";
-    #workdir = tarfile.open('... where does it go?...').getnames()[0];
-    install = "install-tl -gui text";
-    modify_environ = "adding texlive path to PATH";
-#eclass
+    def workdir(self, package_file):
+        return tarfile.open(package_file).getnames()[0];
+
+    modify_environ = {'TEXLIVE_INSTALL_PREFIX':'%(prefix)s/opt/tex'}
+
+    install = "install-tl -gui text -portable";
+
+#eclass:w
+

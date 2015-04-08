@@ -59,13 +59,16 @@ class Package(object):
         info(self.instance_name, "Starting merge")
 
         oldpath = enter_dir(self.srcpath)
-
+        
         if hasattr(self,'workdir'):
             if os.path.isdir(self.workdir):
                 shutil.rmtree(self.workdir)
-                
 
         package_file = self.Fetch()
+        
+        if hasattr(self,'workdir'):
+            if not isinstance(self.workdir,str):
+                self.workdir = self.workdir(package_file)
 
         workdir = self.Unpack(package_file)
 
@@ -225,3 +228,9 @@ class EasyInstallPackage(Package):
     dependencies = ["setuptools"]
     workdir="%(prefix)s"
     install="easy_install -U %(name)s"
+
+
+class EasyInstall3Package(Package):
+    dependencies = ["python3"]
+    workdir="%(prefix)s"
+    install="easy_install3 -U %(name)s"   
