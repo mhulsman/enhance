@@ -9,5 +9,6 @@ class python(MakePackage):
     install="""
             make install
             python setup.py install --prefix=%(prefix)s
+            echo '#!/bin/bash\nPYTHONPATH=%(prefix)s/lib/python2.7/\npython2.7 $@\n' > %(prefix)s/bin/python2
+            chmod +x %(prefix)s/bin/python2
             """
-
