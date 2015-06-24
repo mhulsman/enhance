@@ -6,6 +6,7 @@ class lapack(Package):
     config='sed -e "s:OPTS     =:OPTS = -fPIC:g" -e "s:NOOPT    =:NOOPT = -fPIC:g" make.inc.example > make.inc'
 
     build="""
+          ulimit -s 65000
           make blaslib
           make
           """
