@@ -1,4 +1,4 @@
 from package import *
 
-class dnspython(EasyInstallPackage):
+class dnspython3(EasyInstallPackage):
     pass
