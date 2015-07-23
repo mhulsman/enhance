@@ -20,4 +20,3 @@ include_dirs = %(prefix)s/include
         f = open(os.path.join(self.workdir, 'site.cfg'),'w')
         f.write(sitecfg)
         f.close()
-
