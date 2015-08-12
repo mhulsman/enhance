@@ -54,8 +54,14 @@ def download(url, filename=None):
         return os.path.basename(urlsplit(openUrl.url)[2])
 
     try:
-        context = ssl._create_unverified_context()
-        u = urllib2.urlopen(urllib2.Request(url), context=context)
+        if hasattr(ssl, '_create_unverified_context'):
+            context=ssl._create_unverified_context()
+            u = urllib2.urlopen(urllib2.Request(url), context=context)
+        else:
+            u = urllib2.urlopen(urllib2.Request(url))
+        #context = hasattr(ssl, '_create_unverified_context') and ssl._create_unverified_context() or None
+        #context = ssl._create_unverified_context()
+        #u = urllib2.urlopen(urllib2.Request(url), context=context)
     except urllib2.HTTPError, e:
         error("Could not download %s, error: %s" %(str(url), str(e)))
         
