@@ -13,7 +13,7 @@ import shutil
 import inspect
 from urlparse import urlsplit
 import re
-
+import ssl
 
 def enter_dir(path):
     check_dir(path)
@@ -54,7 +54,8 @@ def download(url, filename=None):
         return os.path.basename(urlsplit(openUrl.url)[2])
 
     try:
-        u = urllib2.urlopen(urllib2.Request(url))
+        context = ssl._create_unverified_context()
+        u = urllib2.urlopen(urllib2.Request(url), context=context)
     except urllib2.HTTPError, e:
         error("Could not download %s, error: %s" %(str(url), str(e)))
         

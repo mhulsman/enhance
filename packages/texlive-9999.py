@@ -10,7 +10,7 @@ class texlive(Package):
 
     modify_environ = {'TEXLIVE_INSTALL_PREFIX':'%(prefix)s/opt/tex'}
 
-    install = "install-tl -gui text -portable";
+    install = "./install-tl -gui text -portable";
 
 #eclass:w
 

@@ -4,10 +4,12 @@ class dazzdb(MakePackage):
   
   dependencies=['git']
 
-  def fetch(self):
-      runCommand('git clone https://github.com/thegenemyers/DAZZ_DB.git')
- 
-  workdir="DAZZ_DB"
+  fetch="https://github.com/thegenemyers/DAZZ_DB/archive/V1.0.tar.gz"
+  
+  workdir="DAZZ_DB-1.0"
+  
+  #def fetch(self):
+  #    runCommand('git clone https://github.com/thegenemyers/DAZZ_DB.git')
 
   config=""
 
