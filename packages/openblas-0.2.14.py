@@ -2,7 +2,7 @@ from package import *
 from tools import *
 
 class openblas(MakePackage):
-    dependencies=["gcc"]
+    dependencies=["gcc", "binutils"]
 
     fetch="http://github.com/xianyi/OpenBLAS/archive/v0.2.14.tar.gz"
     workdir="OpenBLAS-0.2.14"

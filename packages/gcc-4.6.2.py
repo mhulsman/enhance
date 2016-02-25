@@ -1,6 +1,6 @@
 from package import *
 class gcc(MakePackage):
-    dependencies=['ppl==0.11.2','cloogppl==0.15.11','mpc','mpfr','gmp']
+    dependencies=['ppl','cloogppl==0.15.11','mpc','mpfr','gmp']
     modify_environ={'LIBRARY_PATH':''}
 
     fetch='ftp://ftp.nluug.nl/mirror/languages/gcc/releases/gcc-4.6.2/gcc-4.6.2.tar.gz'
