@@ -2,7 +2,7 @@ from package import *
 from tools import *
 
 class atlas(MakePackage):
-    dependencies=["gcc"]
+    dependencies=["gcc==4.6.2"]
     def fetch(self):
         self.package_file = download(self.fillVars("http://downloads.sourceforge.net/project/math-atlas/Stable/%(version)s/atlas%(version)s.tar.bz2"))
         self.lapack_file = download("http://www.netlib.org/lapack/lapack-3.5.0.tgz")
