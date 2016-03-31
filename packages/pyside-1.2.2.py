@@ -5,7 +5,7 @@ class pyside(Package):
 
     fetch="https://pypi.python.org/packages/source/P/PySide/PySide-%(version)s.tar.gz"
 
-    build="python setup.py bdist_wheel --qmake=/usr/bin/qmake-qt4" 
+    build="python setup.py bdist_wheel" 
     
     install="""
         pip install --use-wheel %(workpath)s/dist/PySide-%(version)s-cp27-none-linux_x86_64.whl

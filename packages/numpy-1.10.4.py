@@ -2,7 +2,7 @@ from package import *
 
 class numpy(PythonPackage):
     dependencies = ["openblas","python"]
-    fetch="http://downloads.sourceforge.net/project/numpy/NumPy/1.9.2/numpy-1.9.2.tar.gz"
+    fetch="http://downloads.sourceforge.net/project/numpy/NumPy/1.10.4/numpy-1.10.4.tar.gz"
 
     site="""
 [DEFAULT]

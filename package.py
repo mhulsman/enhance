@@ -46,6 +46,7 @@ class Package(object):
                 'version':self.version,
                 'prefix':self.prefixpath,
                 'srcpath':self.srcpath,
+                'workpath':getattr(self,'workdir',None),
                 'rootpath':self.mainpath,
                 'distpath':self.distpath,
                 'cwd':os.getcwd()
@@ -60,21 +61,22 @@ class Package(object):
 
         oldpath = enter_dir(self.srcpath)
         
-        if hasattr(self,'workdir'):
-            if os.path.isdir(self.workdir):
-                shutil.rmtree(self.workdir)
 
         package_file = self.Fetch()
-        
         if hasattr(self,'workdir'):
             if not isinstance(self.workdir,str):
                 self.workdir = self.workdir(package_file)
+
+            if os.path.isdir(self.workdir):
+                shutil.rmtree(self.workdir)
 
         workdir = self.Unpack(package_file)
 
         if workdir:
             workdir = self.fillVars(workdir)
             enter_dir(workdir)
+        
+        self.workdir = os.getcwd()
 
         
         if hasattr(self,'modify_environ'):
@@ -228,6 +230,11 @@ class EasyInstallPackage(Package):
     dependencies = ["setuptools"]
     workdir="%(prefix)s"
     install="easy_install -U %(name)s"
+
+class PipInstallPackage(Package):
+    dependencies = ["pip"]
+    workdir="%(prefix)s"
+    install="pip install -U %(name)s"
 
 
 class EasyInstall3Package(Package):

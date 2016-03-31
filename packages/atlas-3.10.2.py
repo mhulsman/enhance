@@ -1,14 +1,19 @@
 from package import *
+from tools import *
 
 class atlas(MakePackage):
-    dependencies=["lapack"]
-
-    fetch="http://downloads.sourceforge.net/project/math-atlas/Stable/%(version)s/atlas%(version)s.tar.bz2"
+    dependencies=["gcc==4.6.2"]
+    def fetch(self):
+        self.package_file = download(self.fillVars("http://downloads.sourceforge.net/project/math-atlas/Stable/%(version)s/atlas%(version)s.tar.bz2"))
+        self.lapack_file = download("http://www.netlib.org/lapack/lapack-3.5.0.tgz")
 
     workdir = "ATLAS/build_dir"
 
-    config="../configure -Fa alg -fPIC --with-netlib-lapack=%(prefix)s/lib/lapack_LINUX.a --prefix=%(prefix)s -Si cputhrchk 0"
+    config="""../configure -C acg %(prefix)s/bin/gcc -C if %(prefix)s/bin/gfortran -b 64 -t 8 -Fa alg -fPIC -D c -DWALL --force-tids="8 0 1 2 3 4 5 6 7" --with-netlib-lapack-tarfile=%(src)s/lapack-3.5.0.tgz --prefix=%(prefix)s"""
 
-    build = "make -j1"
+    build = """
+        ulimit -s 65000 
+        make -j1
+        """
 
 

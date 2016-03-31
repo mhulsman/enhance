@@ -86,11 +86,10 @@ class PackageManager(object):
         installed = {}
         to_install = set()
         for iv in install_versions:
-            if not iv.package_name in appnames and iv.getState() == "installed" or iv.getState() == "system":
+            if not iv.package_name in appnames and (iv.getState() == "installed" or iv.getState() == "system"):
                 installed[iv.package_name] = iv
             else:
                 to_install.add(iv)
-
         #order on dependencys
         ordered_to_install = []
         while to_install:
@@ -196,7 +195,12 @@ class DependencyStackElem(object):
         return self.version
 
     def updateDependencies(self):
+        self.deps = {}       
+        if self.version.state == 'system' or self.version.state == 'installed':
+            return
+
         deps = self.version.getDependencies()
+        
         for dep in deps:
             if dep[0] in self.deps:
                 self.deps[dep[0]].append(dep)
