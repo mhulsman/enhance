@@ -2,7 +2,7 @@ from package import *
 
 class pyside(MakePackage):
     dependencies=['shiboken']
-    fetch="http://qt-project.org/uploads/pyside/pyside-qt4.8+%(version)s.tar.bz2"
+    fetch="https://pypi.python.org/packages/source/P/PySide/PySide-1.1.2.tar.gz"
     modify_environ = {'PYSIDESANDBOXPATH':'%(prefix)s'}
 
     build_reldir = "build"

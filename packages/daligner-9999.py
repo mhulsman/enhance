@@ -3,11 +3,12 @@ from package import *
 class daligner(MakePackage):
   
   dependencies=['git']
-
-  def fetch(self):
-      runCommand('git clone https://github.com/thegenemyers/DALIGNER.git')
+  
+  fetch="https://github.com/thegenemyers/DALIGNER/archive/V1.0.tar.gz"
+  #def fetch(self):
+  #    runCommand('git clone https://github.com/thegenemyers/DALIGNER.git')
  
-  workdir="DALIGNER"
+  workdir="DALIGNER-1.0"
 
   config=""
 
